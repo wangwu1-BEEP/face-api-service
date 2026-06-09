@@ -10,6 +10,20 @@
 4. 人脸检测：OpenCV DNN SSD + Haar Cascade回退
 """
 
+# 阿里云函数计算兼容：自动安装缺失的依赖
+import subprocess
+import sys
+
+def install_missing_packages():
+    packages = ['flask-cors', 'flask', 'gunicorn']
+    for package in packages:
+        try:
+            __import__(package.replace('-', '_').replace('flask_cors', 'flask_cors'))
+        except ImportError:
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', package, '-q'])
+
+install_missing_packages()
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
