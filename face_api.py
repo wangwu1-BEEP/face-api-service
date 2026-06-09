@@ -470,6 +470,9 @@ def delete_user():
 if __name__ == '__main__':
     load_detection_models()
     
+    # 支持环境变量 PORT（适用于 Hugging Face Spaces 等平台）
+    port = int(os.environ.get('PORT', 5001))
+    
     logger.info("="*50)
     logger.info("人脸识别服务启动")
     logger.info(f"OpenCV版本: {cv2.__version__}")
@@ -480,4 +483,4 @@ if __name__ == '__main__':
     logger.info(f"数据目录: {FACE_DATA_DIR}")
     logger.info("="*50)
     
-    app.run(host='0.0.0.0', port=5001, debug=False)
+    app.run(host='0.0.0.0', port=port, debug=False)
