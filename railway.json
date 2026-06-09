@@ -1,13 +1,15 @@
 {
   "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS",
-    "nixpacksPkgs": ["python38", "pkgs.libglib2", "pkgs.libGL"]
+    "builder": "PYTHON",
+    "pythonVersion": {
+      "version": "3.11"
+    }
   },
   "deploy": {
     "numReplicas": 1,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10,
-    "healthCheckPath": "/api/face/health"
+    "startCommand": "gunicorn --bind 0.0.0.0:$PORT face_api:app --workers 2 --timeout 120"
   }
 }
